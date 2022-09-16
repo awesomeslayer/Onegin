@@ -235,7 +235,6 @@ void test_qsort(string_elem* string_buf, size_t string_num, FILE* file)
     print_text(string_buf, string_num, file);
 }
 
-
 void realise_sort(string_elem* string_buf, char* buf, size_t string_num, FILE* file, size_t fsize)
 {
     fill_string_buf(string_buf, buf, string_num);
