@@ -26,23 +26,23 @@ void swap(void * a, void * b, size_t length)
     }
 }
 
-long file_size(FILE* file)
+size_t file_size(FILE* file)
 {
     assert(file);
 
     fseek(file, 0, SEEK_END);
-    long size = ftell(file); 
+    size_t size = (size_t)ftell(file); 
     fseek(file, 0, SEEK_SET);
 
     return size; 
 }
 
-void print_buf (char* buf, FILE* file, long num)
+void print_buf (char* buf, FILE* file, size_t num)
 {
     assert(buf);
     assert(file);
     
-    for(int i = 0; i < num; i++)
+    for(size_t i = 0; i < num; i++)
     {
         if(buf[i] == '\0')
         {
@@ -52,12 +52,12 @@ void print_buf (char* buf, FILE* file, long num)
     }
 }
 
-int read_text(char* buf, FILE* file)
+size_t read_text(char* buf, FILE* file)
 {
     assert(buf);
     assert(file);
     
-    int string_num = 0;
+    size_t string_num = 0;
     int i = 0;
     while(fread(buf+i, sizeof(char), 1, file) != 0)
     {
@@ -76,23 +76,23 @@ int read_text(char* buf, FILE* file)
     return string_num;
 }
 
-void print_text(string_elem* string_buf, int string_num, FILE* file)
+void print_text(string_elem* string_buf, size_t string_num, FILE* file)
 {
     assert(string_buf);
     assert(file);
 
-    for(int i = 0; i < string_num; i++)
+    for(size_t i = 0; i < string_num; i++)
         fprintf(file, "%s\n", (string_buf+i)->string); 
 }
 
-void fill_string_buf(string_elem* string_buf, char* buf, int string_num)
+void fill_string_buf(string_elem* string_buf, char* buf, size_t string_num)
 {
     assert(string_buf);
     assert(buf);
 
-    int j = 0;
-    int i = 0;
-    int length = 0;
+    size_t j = 0;
+    size_t i = 0;
+    size_t length = 0;
 
     while(i <= string_num) 
     {
@@ -129,7 +129,7 @@ void my_qsort(void *buf, size_t number, size_t size, int (*my_compare) (const vo
     void* point = (char*)buf + size * (number - 1);
     bool flag = true;
 
-    for(int i = 0; i < number - 1; i ++)
+    for(size_t i = 0; i < number - 1; i ++)
     {
         void* actual = (char*)buf + size * i;
         if(flag == true && my_compare(point, actual) < 0)
@@ -149,7 +149,7 @@ void my_qsort(void *buf, size_t number, size_t size, int (*my_compare) (const vo
         }
     }
 
-    size_t new_number1 = ((char*)point - (char*)buf)/size;
+    size_t new_number1 = (size_t)((char*)point - (char*)buf)/size;
     size_t new_number2 = number - new_number1 - 1;
     my_qsort (buf, new_number1, size, my_compare);
     my_qsort ((char*)point + size, new_number2, size, my_compare);
@@ -163,8 +163,8 @@ int my_compare_right(const void* a, const void* b)
     const string_elem* arg1 = (const string_elem*) a;
     const string_elem* arg2 = (const string_elem*) b;
     
-    int i = 0;
-    int j = 0;
+    size_t i = 0;
+    size_t j = 0;
     int lower_arg1 = 0;
     int lower_arg2 = 0;
     while((arg1->string)[i] != '\0' && (arg2->string)[j] != '\0')
@@ -187,7 +187,7 @@ int my_compare_right(const void* a, const void* b)
         }
         else i++;
     }
-    return (arg1->len - arg2->len);
+    return (int)(arg1->len - arg2->len);
 }
 
 int my_compare_left(const void* a, const void* b)
@@ -198,8 +198,8 @@ int my_compare_left(const void* a, const void* b)
     const string_elem* arg1 = (const string_elem*) a;
     const string_elem* arg2 = (const string_elem*) b;
     
-    int i = arg1->len-1;
-    int j = arg2->len-1;
+    size_t i = arg1->len-1;
+    size_t j = arg2->len-1;
     int lower_arg1 = 0;
     int lower_arg2 = 0;
 
@@ -223,10 +223,10 @@ int my_compare_left(const void* a, const void* b)
         }
         else i--;
     }
-    return (arg1->len - arg2->len);
+    return (int)(arg1->len - arg2->len);
 }
 
-void test_qsort(string_elem* string_buf, int string_num, FILE* file)
+void test_qsort(string_elem* string_buf, size_t string_num, FILE* file)
 {
     fprintf(file, "_______________________________________________DEBUG_TEST_______________________________________________");
     qsort(string_buf, string_num, sizeof(string_elem), my_compare_right);
@@ -236,7 +236,7 @@ void test_qsort(string_elem* string_buf, int string_num, FILE* file)
 }
 
 
-void realise_sort(string_elem* string_buf, char* buf, int string_num, FILE* file, long fsize)
+void realise_sort(string_elem* string_buf, char* buf, size_t string_num, FILE* file, size_t fsize)
 {
     fill_string_buf(string_buf, buf, string_num);
     my_qsort(string_buf, string_num, sizeof(string_elem), my_compare_right);
