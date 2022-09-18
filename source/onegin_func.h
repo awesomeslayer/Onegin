@@ -29,4 +29,5 @@ int my_compare_right(const void* a, const void* b);
 int my_compare_left(const void* a, const void* b);
 void realise_sort(string_elem* string_buf, char* buf, size_t string_num, FILE* file, size_t fsize);
 void test_qsort(string_elem* string_buf, size_t string_num, FILE* file);
+void realise(char* inputfile, char* outputfile);
 #endif
