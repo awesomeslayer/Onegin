@@ -2,7 +2,7 @@
 
 #define once
 #define true 1
-#define falce 0
+#define false 0
 //#define TEST_MODE 
 
 #include <stdio.h>

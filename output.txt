@@ -1,3 +1,5 @@
+_________________________________RIGHT_SORT_____________________________________________
+
 
 
 
@@ -4457,6 +4459,8 @@ The Queen's closet.
     You that look pale and tremble at this chance,
     Youth to itself rebels, though none else near.
     You told us of some suit. What is't, Laertes?
+______________________________________________BACK_SORT_________________________________________________
+
 
 
 
@@ -8916,6 +8920,7 @@ Scene IV.
   Queen. Thanks, Guildenstern and gentle Rosencrantz.  
                     Enter Rosencrantz.
   Ham. Buzz, buzz!
+______________________________________ORIGINAL_TEXT______________________________________________
 THE TRAGEDY OF HAMLET, PRINCE OF DENMARK
 
 
@@ -13375,3 +13380,4 @@ Enter Hamlet and Horatio.
 
 
 THE END
+

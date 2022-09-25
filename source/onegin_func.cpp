@@ -61,18 +61,15 @@ size_t read_text(char* buf, FILE* file)
     int i = 0;
     while(fread(buf+i, sizeof(char), 1, file) != 0)
     {
-        if(buf[i] == '\0')
-        {
-            string_num++;
-            break;
-        }
-        else if(buf[i] == '\n')
+        if(buf[i] == '\n')
         { 
             string_num++;
             buf[i] = '\0';
         }
         i++;
     }
+    buf[i-1] = '\0';
+    string_num++;
     return string_num;
 }
 
@@ -228,7 +225,7 @@ int my_compare_left(const void* a, const void* b)
 
 void test_qsort(string_elem* string_buf, size_t string_num, FILE* file)
 {
-    fprintf(file, "_______________________________________________DEBUG_TEST_______________________________________________");
+    fprintf(file, "_______________________________________________DEBUG_TEST_______________________________________________\n");
     qsort(string_buf, string_num, sizeof(string_elem), my_compare_right);
     print_text(string_buf, string_num, file);
     qsort(string_buf, string_num, sizeof(string_elem), my_compare_left);
@@ -239,20 +236,22 @@ void realise_sort(string_elem* string_buf, char* buf, size_t string_num, FILE* f
 {
     fill_string_buf(string_buf, buf, string_num);
     my_qsort(string_buf, string_num, sizeof(string_elem), my_compare_right);
+    fprintf(file, "_________________________________RIGHT_SORT_____________________________________________\n");
     print_text(string_buf, string_num, file);
-    my_qsort(string_buf, string_num, sizeof(string_elem), my_compare_left);   
+    my_qsort(string_buf, string_num, sizeof(string_elem), my_compare_left); 
+    fprintf(file, "______________________________________________BACK_SORT_________________________________________________\n");  
     print_text(string_buf, string_num, file);
+    fprintf(file, "______________________________________ORIGINAL_TEXT______________________________________________\n");
     print_buf(buf, file, fsize);
 }
 
 void realise(char* inputfile, char* outputfile)
 {
     FILE* file = fopen(inputfile, "r");
-    size_t fsize = file_size(file);
+    size_t fsize = file_size(file)+1;
     char* buf = (char*)calloc(fsize, sizeof(char));
     size_t string_num = read_text(buf, file);
     fclose(file);
-
     file = fopen(outputfile, "w");
     string_elem* string_buf = (string_elem*)calloc(string_num, sizeof(string_elem));
     #ifndef TEST_MODE
