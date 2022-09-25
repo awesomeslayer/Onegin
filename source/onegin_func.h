@@ -26,7 +26,7 @@ size_t file_size(FILE* file);
 
 void print_buf (char* buf, FILE* file, size_t num);
 
-size_t read_text(char* buf, FILE* file);
+size_t read_text(char* buf, FILE* file, size_t num);
 
 void print_text(string_elem* string_buf, size_t string_num, FILE* file);
 

@@ -52,13 +52,13 @@ void print_buf (char* buf, FILE* file, size_t num)
     }
 }
 
-size_t read_text(char* buf, FILE* file)
+size_t read_text(char* buf, FILE* file, size_t num)
 {
     assert(buf);
     assert(file);
     
     size_t string_num = 0;
-    int i = 0;
+    size_t i = 0;
     while(fread(buf+i, sizeof(char), 1, file) != 0)
     {
         if(buf[i] == '\n')
@@ -66,10 +66,18 @@ size_t read_text(char* buf, FILE* file)
             string_num++;
             buf[i] = '\0';
         }
+        else if(buf[i] == '\0')
+        {
+            string_num++;
+            break;
+        }
+        else if(i == num-2)
+        {
+            buf[i+1] = '\0';
+            string_num++;
+        }
         i++;
     }
-    buf[i-1] = '\0';
-    string_num++;
     return string_num;
 }
 
@@ -250,8 +258,9 @@ void realise(char* inputfile, char* outputfile)
     FILE* file = fopen(inputfile, "r");
     size_t fsize = file_size(file)+1;
     char* buf = (char*)calloc(fsize, sizeof(char));
-    size_t string_num = read_text(buf, file);
+    size_t string_num = read_text(buf, file, fsize);
     fclose(file);
+
     file = fopen(outputfile, "w");
     string_elem* string_buf = (string_elem*)calloc(string_num, sizeof(string_elem));
     #ifndef TEST_MODE
